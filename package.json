@@ -16,7 +16,5 @@
     "node-html-to-image": "^3.2.4",
     "xhr2": "^0.2.1"
   },
-  "devDependencies": {
-    "cross-env": "^7.0.3"
-  }
+  "devDependencies": {}
 }
