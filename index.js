@@ -127,6 +127,7 @@ async function getTweetData(id) {
     data.retweets = convertNumberToString(jsonData.data[0].public_metrics.retweet_count);
     data.likes = convertNumberToString(jsonData.data[0].public_metrics.like_count);
     data.bluetick = jsonData.includes.users[0].verified;
+    data.embed = null;
     return data;
 }
 
@@ -192,6 +193,10 @@ async function generateCard(req, dataObj) {
             case "minicontent":
                 if (!dataObj[key]) {
                     $('#data-thread').first().remove();
+                }
+            case "embed":
+                if (!dataObj[key]) {
+                    $('#data-embed').first().remove();
                 }
             default:
                 $('#data-' + key).first().html(dataObj[key]);
