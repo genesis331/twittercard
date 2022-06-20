@@ -87,8 +87,15 @@ async function getTweetData(id) {
             data.text = translateMentions(jsonData.data[0].entities.mentions[i].username, data.text);
         }
     }
+    data.embedurl = null;
     if (jsonData.data[0].entities.urls) {
         for (let i = 0; i < jsonData.data[0].entities.urls.length; i++) {
+            if (jsonData.data[0].entities.urls[i].images) {
+                data.embedurl = jsonData.data[0].entities.urls[i].display_url;
+                data.embedtitle = jsonData.data[0].entities.urls[i].title;
+                data.embeddesc = jsonData.data[0].entities.urls[i].description;
+                data.embedimage = jsonData.data[0].entities.urls[i].images[0].url;
+            }
             data.text = removeLink(jsonData.data[0].entities.urls[i].url, data.text);
         }
     }
@@ -127,7 +134,6 @@ async function getTweetData(id) {
     data.retweets = convertNumberToString(jsonData.data[0].public_metrics.retweet_count);
     data.likes = convertNumberToString(jsonData.data[0].public_metrics.like_count);
     data.bluetick = jsonData.includes.users[0].verified;
-    data.embed = null;
     return data;
 }
 
@@ -193,11 +199,20 @@ async function generateCard(req, dataObj) {
             case "minicontent":
                 if (!dataObj[key]) {
                     $('#data-thread').first().remove();
+                } else {
+                    $('#data-' + key).first().html(dataObj[key]);
                 }
-            case "embed":
+                break;
+            case "embedurl":
                 if (!dataObj[key]) {
                     $('#data-embed').first().remove();
+                } else {
+                    $('#data-' + key).first().html(dataObj[key].split('/')[0]);
                 }
+                break;
+            case "embedimage":
+                $('#data-' + key).first().attr('style', `background-image: url(${dataObj[key]})`);
+                break;
             default:
                 $('#data-' + key).first().html(dataObj[key]);
                 break;
@@ -210,11 +225,11 @@ app.get('/', (req, res) => {
     res.end('Hello World!');
 });
 
-// app.get('/test', async (req, res) => {
-//     let dataObj = await getTweetData(req.query.id);
-//     let card = await generateCard(req, dataObj);
-//     res.end(card);
-// });
+app.get('/test', async (req, res) => {
+    let dataObj = await getTweetData(req.query.id);
+    let card = await generateCard(req, dataObj);
+    res.end(card);
+});
 
 app.get('/image', async (req, res) => {
     if (req.query.id) {
