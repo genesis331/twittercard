@@ -35,8 +35,8 @@ http://domain.com/image?id=1250966843545640960&darkMode=true
 ```
 
 ## Inspect HTML
-Perform a GET request to `/test` to return a HTML. 
+Perform a GET request to `/html` to return a HTML. 
 ```
-http://domain.com/test?id=1250966843545640960
+http://domain.com/html?id=1250966843545640960
 ```
 > You may also add the `darkMode=true` parameter to enable dark mode.

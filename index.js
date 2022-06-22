@@ -2,7 +2,6 @@ const express = require('express');
 const cheerio = require('cheerio');
 const XMLHttpRequest = require('xhr2');
 const nodeHtmlToImage = require('node-html-to-image');
-const { json } = require('express');
 require('dotenv').config();
 
 const port = 3000;
@@ -236,10 +235,10 @@ async function generateCard(req, dataObj) {
 }
 
 app.get('/', (req, res) => {
-    res.end('Hello World!');
+    res.end('Welcome to twittercard!');
 });
 
-app.get('/test', async (req, res) => {
+app.get('/html', async (req, res) => {
     let dataObj = await getTweetData(req.query.id);
     let card = await generateCard(req, dataObj);
     res.end(card);
