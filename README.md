@@ -25,18 +25,18 @@ When you're ready to stop your local server, type <kbd>Ctrl</kbd>+<kbd>C</kbd> i
 ## Basic example
 Make a GET request to `/image` & provide a tweet ID to `id` parameter.
 ```
-http://domain.com/image?id=1250966843545640960
+https://domain.com/image?id=1250966843545640960
 ```
 
 ## Enable dark mode
 Add the `darkMode=true` parameter to the URL.
 ```
-http://domain.com/image?id=1250966843545640960&darkMode=true
+https://domain.com/image?id=1250966843545640960&darkMode=true
 ```
 
 ## Inspect HTML
 Perform a GET request to `/html` to return a HTML. 
 ```
-http://domain.com/html?id=1250966843545640960
+https://domain.com/html?id=1250966843545640960
 ```
 > You may also add the `darkMode=true` parameter to enable dark mode.
