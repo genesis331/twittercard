@@ -151,7 +151,7 @@ async function getTweetData(id) {
 }
 
 async function getQuotedTweetData(id) {
-    let raw = await getResponse(`https://api.twitter.com/2/tweets?ids=${id}&expansions=author_id%2Creferenced_tweets.id%2Creferenced_tweets.id.author_id%2Cattachments.media_keys&tweet.fields=entities%2Csource%2Ccreated_at%2Cpublic_metrics&user.fields=verified%2Cprofile_image_url&media.fields=url%2Cpreview_image_url`, process.env.TWITTER_AUTH_TOKEN);
+    let raw = await getResponse(`https://api.twitter.com/2/tweets?ids=${id}&expansions=author_id&tweet.fields=entities%2Ccreated_at&user.fields=verified%2Cprofile_image_url&media.fields=url%2Cpreview_image_url`, process.env.TWITTER_AUTH_TOKEN);
     let jsonData = JSON.parse(raw);
     return {
         mininame: jsonData.includes.users[0].name,
