@@ -1,13 +1,13 @@
 {
   "name": "twittercard",
   "version": "1.0.0",
-  "description": "",
+  "description": "Twittercard creates beautiful Twitter tweet images.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": ["nodejs", "javascript", "docker", "twitter"],
+  "author": "genesis331",
   "license": "ISC",
   "dependencies": {
     "cheerio": "^1.0.0-rc.11",
