@@ -25,5 +25,7 @@ jobs:
         name: Build & Push
         uses: docker/build-push-action@v3
         with:
+          context: .
+          platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/genesis331/twittercard
+          tags: ghcr.io/genesis331/twittercard:latest
