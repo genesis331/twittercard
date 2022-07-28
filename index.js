@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const cheerio = require('cheerio');
 const XMLHttpRequest = require('xhr2');
@@ -235,7 +236,9 @@ async function generateCard(req, dataObj) {
 }
 
 app.get('/', (req, res) => {
-    res.end('Welcome to twittercard!');
+    fs.readFile('welcome.txt', 'utf8', (err, data) => {
+        res.end(data);
+    });
 });
 
 app.get('/html', async (req, res) => {
