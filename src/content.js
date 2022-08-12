@@ -16,6 +16,7 @@ function toggleTheme() {
         
         document.getElementById('github-icon').src = './src/icons/icon_github_white.svg';
         document.getElementById('theme-switcher-icon').src = './src/icons/icon_moon.svg';
+        document.getElementById('output-img').src = './src/default/default-dark.png';
         document.getElementsByTagName('hr')[0].style.backgroundColor = 'white';
         document.getElementsByTagName('body')[0].style.background = 'linear-gradient(135deg, #021623, #130223)';
     }
@@ -34,6 +35,7 @@ function toggleTheme() {
         
         document.getElementById('github-icon').src = './src/icons/icon_github_black.svg';
         document.getElementById('theme-switcher-icon').src = './src/icons/icon_sun.svg';
+        document.getElementById('output-img').src = './src/default/default-light.png';
         document.getElementsByTagName('hr')[0].style.backgroundColor = 'black';
         document.getElementsByTagName('body')[0].style.background = 'linear-gradient(135deg, #f0f9ff, #e4ecff)';
     }
