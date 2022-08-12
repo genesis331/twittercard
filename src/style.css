@@ -1,0 +1,215 @@
+/* Header */
+.title {
+    margin-top: 7vh;
+    font-weight: 500;
+    margin-bottom: 2.5vh;
+}
+  
+.input-box {
+    margin-bottom: 4vh;
+    font-weight: 400;
+}
+  
+.button-line {
+    margin-bottom: 4vh;
+    font-weight: 400;
+}
+  
+.button-generate {
+    height: 5vh;
+    margin-right: 4vh;
+    padding: 0 4vh;
+    font-size: inherit;
+    cursor: pointer;
+    border: 0px;
+    border-radius: 30px;
+}
+  
+.button-generate > span {
+    display: inline-block;
+    transform: translateY(0.2vh);
+}
+  
+.button-switch-theme {
+    width: 5vh;
+    height: 5vh;
+    cursor: pointer;
+    border: 0px;
+    border-radius: 30px;
+    vertical-align: middle;
+}
+
+.button-switch-theme > img {
+    height: 80%;
+    width: 80%;
+    vertical-align: middle;
+}
+  
+.button-download {
+    position: absolute;
+    padding: 2vw;
+    cursor: pointer;
+    color: transparent;
+    border: 0px;
+    top: 0;
+    right: 0;
+}
+
+.button-download > img {
+    width: 2vw;
+    height: 2vw;
+}
+  
+.output-box-wrapper {
+    width: 100%;
+    margin-bottom: 2vh;
+}
+  
+.output-box {
+    display: inline-block;
+    position: relative;
+    width: 50%;
+}
+
+.output-box > img {
+    width: 100%;
+}
+
+.contributors-large {
+    position: fixed;
+    float: left;
+    margin-top: 16vh;
+    margin-left: 5vh;
+    margin-right: -100vh;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.contributors-small {
+    display: None;
+    margin-bottom: 6vh;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+[class*="avatar-"] {
+    height: 3vh;
+    width: 3vh;
+    margin-top: 2px;
+    margin-right: 1.5vh;
+    margin-bottom: 6px;
+    vertical-align: middle;
+    border-radius: 100%;
+}
+  
+.open-source {
+    font-size: 14px;
+    font-weight: 400;
+    width: 100%;
+    margin-bottom: 6vh;
+}
+
+.open-source > a > img {
+    vertical-align: middle;
+    margin-right: 10px;
+    margin-top: -4px;
+}
+  
+.github-icon {
+    width: 16px;
+    height: 16px;
+}
+  
+/* Theming: Light */
+.light-text {
+    color: black;
+}
+.light-2 {
+    color: #888888;
+    background-color: #efefef;
+    box-shadow: 0 0 20px 0 rgba(21, 32, 43, 25%);
+}
+  
+/* Theming: Dark */
+.dark-text {
+    color: white;
+}
+.dark-2 {
+    color: #afafaf;
+    background-color: #3d3d3d;
+    box-shadow: 0 0 20px 0 rgba(29, 155, 240, 25%);
+}
+  
+body {
+    display: flex; 
+    margin: 0;
+    font-family: Helvetica, sans-serif, Arial;
+    font-size: 1.85vh;
+    min-height: 100vh; 
+    flex-direction: column; 
+    justify-content: space-between;
+    text-align: center;
+    background: linear-gradient(135deg, #f0f9ff, #e4ecff);
+}
+  
+input {
+    width: 50vh;
+    padding: 1.8vh 4vh 1.4vh;
+    font-size: inherit;
+    font-weight: 400;
+    border: 0px;
+    outline: none;
+    border-radius: 30px;
+    color: black;
+    background-color: #efefef;
+    box-shadow: 0 0 20px 0 rgba(21, 32, 43, 25%);
+}
+
+hr {
+    margin-top: -8px;
+    margin-bottom: 20px;
+    width: 110%;
+    height: 2px;
+    border: none;
+    background-color: black;
+}
+
+a {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    text-decoration: none;
+}
+
+/* Media Query */
+@media only screen and (max-width: 768px) {
+    
+    .contributors-large {
+        display: None;
+    }
+
+    .output-box {
+        height: 35vh;
+        width: 80vw;
+    }
+
+    .open-source {
+        margin-bottom: 2vh;
+    }
+
+    .contributors-small {
+        display: inline;
+    }
+
+    [class*="avatar-"] {
+        margin-left: 0.75vh;
+        margin-right: 0.75vh;
+    }
+
+    .contributor-small-list {
+        display: inline-flex;
+        text-align: center;
+    }
+}
