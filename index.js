@@ -11,28 +11,30 @@ const app = express();
 app.use(express.static('cards'));
 
 const puppeteerArgs = ['--disable-gpu', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-accelerated-2d-canvas', '--no-zygote'];
-const tempDir = __dirname + '/temp';
+const tempDir = '/twittercardtemp';
 
 fs.readdir(tempDir, function(err, files) {
-    files.forEach(function(file, index) {
-      fs.stat(path.join(tempDir, file), function(err, stat) {
-        var endTime, now;
-        if (err) {
-          return console.error(err);
-        }
-        now = new Date().getTime();
-        endTime = new Date(stat.ctime).getTime() + 3600000;
-        if (now > endTime) {
-          return rimraf(path.join(tempDir, file), function(err) {
-            if (err) {
-              return console.error(err);
-            }
-            console.log('File cleanup!');
-          });
-        }
-      });
-    });
-  });
+    if (files) {
+        files.forEach(function(file, index) {
+            fs.stat(path.join(tempDir, file), function(err, stat) {
+                var endTime, now;
+                if (err) {
+                    return console.error(err);
+                }
+                now = new Date().getTime();
+                endTime = new Date(stat.ctime).getTime() + 3600000;
+                if (now > endTime) {
+                    return rimraf(path.join(tempDir, file), function(err) {
+                    if (err) {
+                        return console.error(err);
+                    }
+                    console.log('File cleanup!');
+                    });
+                }
+            });
+        });
+    }
+});
 
 function getResponse(link, authtoken) {
     return new Promise(resolve => {
@@ -286,31 +288,50 @@ app.get('/image', async (req, res) => {
         if (dataObj.error) {
             res.status(400).end("Error: " + dataObj.error);
         } else {
-            let card = await generateCard(req, dataObj);
-            if (req.query.download == "true") {
-                await nodeHtmlToImage({
-                    html: card,
-                    selector: "#twittercard",
-                    transparent: true,
-                    puppeteerArgs: {
-                        args: puppeteerArgs
-                    },
-                    output: "./temp/" + req.query.id + ".png"
-                });
-                res.type('image/png');
-                res.download("./temp/" + req.query.id + ".png");
-            } else {
-                const image = await nodeHtmlToImage({
-                    html: card,
-                    selector: "#twittercard",
-                    transparent: true,
-                    puppeteerArgs: {
-                        args: puppeteerArgs
+            fs.readdir(tempDir, async function(err, files) {
+                if (files) {
+                    let cacheCheck = false;
+                    files.forEach(function(file, index) {
+                        if (file.includes(req.query.id) && file.includes((req.query.darkMode == "true" ? "dark" : "light"))) {
+                            cacheCheck = true;
+                        }
+                    });
+                    if (req.query.download == "true") {
+                        if (cacheCheck == false) {
+                            let card = await generateCard(req, dataObj);
+                            await nodeHtmlToImage({
+                                html: card,
+                                selector: "#twittercard",
+                                transparent: true,
+                                puppeteerArgs: {
+                                    args: puppeteerArgs
+                                },
+                                output: tempDir + "/" + req.query.id + "-" + (req.query.darkMode == "true" ? "dark" : "light") + ".png"
+                            });
+                        }
+                        res.type('image/png');
+                        res.download(tempDir + "/" + req.query.id + "-" + (req.query.darkMode == "true" ? "dark" : "light") + ".png");
+                    } else {
+                        let image;
+                        if (cacheCheck == false) {
+                            let card = await generateCard(req, dataObj);
+                            image = await nodeHtmlToImage({
+                                html: card,
+                                selector: "#twittercard",
+                                transparent: true,
+                                puppeteerArgs: {
+                                    args: puppeteerArgs
+                                },
+                                output: tempDir + "/" + req.query.id + "-" + (req.query.darkMode == "true" ? "dark" : "light") + ".png"
+                            });
+                        } else {
+                            image = fs.readFileSync(tempDir + "/" + req.query.id + "-" + (req.query.darkMode == "true" ? "dark" : "light") + ".png");
+                        }
+                        res.type('image/png');
+                        res.end(image);
                     }
-                });
-                res.type('image/png');
-                res.end(image);
-            }
+                }
+            });
         }
     } else {
         res.end('Please provide a tweet id number.');
