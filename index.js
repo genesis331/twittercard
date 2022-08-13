@@ -9,6 +9,8 @@ const port = 3000;
 const app = express();
 app.use(express.static('cards'));
 
+const puppeteerArgs = ['--disable-gpu', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-accelerated-2d-canvas', '--no-zygote'];
+
 function getResponse(link, authtoken) {
     return new Promise(resolve => {
         var ajax = new XMLHttpRequest;
@@ -268,7 +270,7 @@ app.get('/image', async (req, res) => {
                     selector: "#twittercard",
                     transparent: true,
                     puppeteerArgs: {
-                        args: ['--no-sandbox', '--disable-setuid-sandbox']
+                        args: puppeteerArgs
                     },
                     output: "./temp.png"
                 });
@@ -280,7 +282,7 @@ app.get('/image', async (req, res) => {
                     selector: "#twittercard",
                     transparent: true,
                     puppeteerArgs: {
-                        args: ['--no-sandbox', '--disable-setuid-sandbox']
+                        args: puppeteerArgs
                     }
                 });
                 res.type('image/png');
