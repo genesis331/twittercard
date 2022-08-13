@@ -115,26 +115,28 @@ async function getTweetData(id) {
             data.id = "@" + jsonData.includes.users[0].username;
             data.profpic = (jsonData.includes.users[0].profile_image_url).replace('_normal', '_400x400');
             data.text = jsonData.data[0].text;
-            if (jsonData.data[0].entities.hashtags) {
-                for (let i = 0; i < jsonData.data[0].entities.hashtags.length; i++) {
-                    data.text = translateHashtag(jsonData.data[0].entities.hashtags[i].tag, data.text);
-                }
-            }
-            if (jsonData.data[0].entities.mentions) {
-                for (let i = 0; i < jsonData.data[0].entities.mentions.length; i++) {
-                    data.text = translateMentions(jsonData.data[0].entities.mentions[i].username, data.text);
-                }
-            }
-            data.embedurl = null;
-            if (jsonData.data[0].entities.urls) {
-                for (let i = 0; i < jsonData.data[0].entities.urls.length; i++) {
-                    if (jsonData.data[0].entities.urls[i].images) {
-                        data.embedurl = jsonData.data[0].entities.urls[i].display_url;
-                        data.embedtitle = jsonData.data[0].entities.urls[i].title;
-                        data.embeddesc = jsonData.data[0].entities.urls[i].description;
-                        data.embedimage = jsonData.data[0].entities.urls[i].images[0].url;
+            if (jsonData.data[0].entities) {
+                if (jsonData.data[0].entities.hashtags) {
+                    for (let i = 0; i < jsonData.data[0].entities.hashtags.length; i++) {
+                        data.text = translateHashtag(jsonData.data[0].entities.hashtags[i].tag, data.text);
                     }
-                    data.text = removeLink(jsonData.data[0].entities.urls[i].url, data.text);
+                }
+                if (jsonData.data[0].entities.mentions) {
+                    for (let i = 0; i < jsonData.data[0].entities.mentions.length; i++) {
+                        data.text = translateMentions(jsonData.data[0].entities.mentions[i].username, data.text);
+                    }
+                }
+                data.embedurl = null;
+                if (jsonData.data[0].entities.urls) {
+                    for (let i = 0; i < jsonData.data[0].entities.urls.length; i++) {
+                        if (jsonData.data[0].entities.urls[i].images) {
+                            data.embedurl = jsonData.data[0].entities.urls[i].display_url;
+                            data.embedtitle = jsonData.data[0].entities.urls[i].title;
+                            data.embeddesc = jsonData.data[0].entities.urls[i].description;
+                            data.embedimage = jsonData.data[0].entities.urls[i].images[0].url;
+                        }
+                        data.text = removeLink(jsonData.data[0].entities.urls[i].url, data.text);
+                    }
                 }
             }
             data.media = jsonData.includes.media ? jsonData.includes.media[0] : null;
@@ -145,19 +147,21 @@ async function getTweetData(id) {
                 data.miniprofpic = quotedData.miniprofpic;
                 data.minicontent = quotedData.minicontent;
                 data.entities = quotedData.minientities;
-                if (data.entities.mentions) {
-                    for (let i = 0; i < data.entities.mentions.length; i++) {
-                        data.minicontent = translateMentions(data.entities.mentions[i].username, data.minicontent);
+                if (data.entities) {
+                    if (data.entities.mentions) {
+                        for (let i = 0; i < data.entities.mentions.length; i++) {
+                            data.minicontent = translateMentions(data.entities.mentions[i].username, data.minicontent);
+                        }
                     }
-                }
-                if (data.entities.hashtags) {
-                    for (let i = 0; i < data.entities.hashtags.length; i++) {
-                        data.minicontent = translateHashtag(data.entities.hashtags[i].tag, data.minicontent);
+                    if (data.entities.hashtags) {
+                        for (let i = 0; i < data.entities.hashtags.length; i++) {
+                            data.minicontent = translateHashtag(data.entities.hashtags[i].tag, data.minicontent);
+                        }
                     }
-                }
-                if (data.entities.urls) {
-                    for (let i = 0; i < data.entities.urls.length; i++) {
-                        data.minicontent = removeLink(data.entities.urls[i].url, data.minicontent);
+                    if (data.entities.urls) {
+                        for (let i = 0; i < data.entities.urls.length; i++) {
+                            data.minicontent = removeLink(data.entities.urls[i].url, data.minicontent);
+                        }
                     }
                 }
                 data.minidate = quotedData.minidate;
