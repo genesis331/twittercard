@@ -176,7 +176,7 @@ async function generateCard(req, dataObj) {
     if (req.query.width) {
         styleArgs += `width: ${req.query.width}px !important;`;
     }
-    if (req.query.darkMode) {
+    if (req.query.darkMode == "true") {
         styleArgs += `background-color: #15202B; color: white;`;
     }
     if (styleArgs !== "") {
