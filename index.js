@@ -262,16 +262,30 @@ app.get('/image', async (req, res) => {
             res.status(400).end("Error: " + dataObj.error);
         } else {
             let card = await generateCard(req, dataObj);
-            const image = await nodeHtmlToImage({
-                html: card,
-                selector: "#twittercard",
-                transparent: true,
-                puppeteerArgs: {
-                    args: ['--no-sandbox', '--disable-setuid-sandbox']
-                }
-            });
-            res.type('image/png');
-            res.end(image);
+            if (req.query.download == "true") {
+                await nodeHtmlToImage({
+                    html: card,
+                    selector: "#twittercard",
+                    transparent: true,
+                    puppeteerArgs: {
+                        args: ['--no-sandbox', '--disable-setuid-sandbox']
+                    },
+                    output: "./temp.png"
+                });
+                res.type('image/png');
+                res.download("./temp.png");
+            } else {
+                const image = await nodeHtmlToImage({
+                    html: card,
+                    selector: "#twittercard",
+                    transparent: true,
+                    puppeteerArgs: {
+                        args: ['--no-sandbox', '--disable-setuid-sandbox']
+                    }
+                });
+                res.type('image/png');
+                res.end(image);
+            }
         }
     } else {
         res.end('Please provide a tweet id number.');
