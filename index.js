@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const rimraf = require('rimraf');
 const express = require('express');
 const cheerio = require('cheerio');
 const XMLHttpRequest = require('xhr2');
@@ -115,6 +116,7 @@ async function getTweetData(id) {
             data.id = "@" + jsonData.includes.users[0].username;
             data.profpic = (jsonData.includes.users[0].profile_image_url).replace('_normal', '_400x400');
             data.text = jsonData.data[0].text;
+            data.embedurl = null;
             if (jsonData.data[0].entities) {
                 if (jsonData.data[0].entities.hashtags) {
                     for (let i = 0; i < jsonData.data[0].entities.hashtags.length; i++) {
@@ -126,7 +128,6 @@ async function getTweetData(id) {
                         data.text = translateMentions(jsonData.data[0].entities.mentions[i].username, data.text);
                     }
                 }
-                data.embedurl = null;
                 if (jsonData.data[0].entities.urls) {
                     for (let i = 0; i < jsonData.data[0].entities.urls.length; i++) {
                         if (jsonData.data[0].entities.urls[i].images) {
