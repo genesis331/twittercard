@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 const express = require('express');
 const cheerio = require('cheerio');
 const XMLHttpRequest = require('xhr2');
@@ -10,6 +11,28 @@ const app = express();
 app.use(express.static('cards'));
 
 const puppeteerArgs = ['--disable-gpu', '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--disable-accelerated-2d-canvas', '--no-zygote'];
+const tempDir = __dirname + '/temp';
+
+fs.readdir(tempDir, function(err, files) {
+    files.forEach(function(file, index) {
+      fs.stat(path.join(tempDir, file), function(err, stat) {
+        var endTime, now;
+        if (err) {
+          return console.error(err);
+        }
+        now = new Date().getTime();
+        endTime = new Date(stat.ctime).getTime() + 3600000;
+        if (now > endTime) {
+          return rimraf(path.join(tempDir, file), function(err) {
+            if (err) {
+              return console.error(err);
+            }
+            console.log('File cleanup!');
+          });
+        }
+      });
+    });
+  });
 
 function getResponse(link, authtoken) {
     return new Promise(resolve => {
@@ -272,10 +295,10 @@ app.get('/image', async (req, res) => {
                     puppeteerArgs: {
                         args: puppeteerArgs
                     },
-                    output: "./temp.png"
+                    output: "./temp/" + req.query.id + ".png"
                 });
                 res.type('image/png');
-                res.download("./temp.png");
+                res.download("./temp/" + req.query.id + ".png");
             } else {
                 const image = await nodeHtmlToImage({
                     html: card,
