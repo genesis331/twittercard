@@ -348,6 +348,6 @@ app.listen(port, () => {
         console.log('Please set the TWITTER_AUTH_TOKEN environment variable.');
         process.exit(0);
     } else {
-        console.log(`App started on port ${port}`);
+        console.log(`twittercard server running on port ${port}!`);
     }
 });
