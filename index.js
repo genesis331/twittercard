@@ -140,7 +140,7 @@ async function getTweetData(id) {
                     }
                 }
             }
-            data.media = jsonData.includes.media ? jsonData.includes.media[0] : null;
+            data.media = jsonData.includes.media && !data.embedurl ? jsonData.includes.media[0] : null;
             if (jsonData.includes.tweets) {
                 let quotedData = await getQuotedTweetData(jsonData.includes.tweets[0].id);
                 data.mininame = quotedData.mininame;
