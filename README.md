@@ -14,6 +14,12 @@ git clone https://github.com/genesis331/twittercard.git
 npm install
 npm start
 ```
+Create an `.env` file and include your Twitter API Authorization Bearer Token, following the format provided below.
+```
+TWITTER_AUTH_TOKEN={YOUR_TOKEN_HERE}
+```
+> Do not include the curly braces!
+
 Visit [localhost:3000](http://localhost:3000) in your browser.
 
 When you're ready to stop your local server, type <kbd>Ctrl</kbd>+<kbd>C</kbd> in your terminal window.
