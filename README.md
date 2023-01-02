@@ -46,3 +46,15 @@ Perform a GET request to `/html` to return a HTML.
 https://domain.com/html?id=1250966843545640960
 ```
 > You may also add the `darkMode=true` parameter to enable dark mode.
+
+# Self-Hosting
+
+1. Pull the latest Docker image from GitHub Packages
+```
+docker pull ghcr.io/genesis331/twittercard:latest
+```
+2. Run the Docker image
+```
+docker run -d --restart unless-stopped -p {PREFERRED_PORT}:3000 --name twittercard -v /{VOLUME_NAME}:/twittercardtemp -e TWITTER_AUTH_TOKEN={YOUR_TOKEN_HERE} ghcr.io/genesis331/twittercard:latest
+```
+> Again, do not include the curly braces!
